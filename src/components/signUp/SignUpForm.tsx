@@ -14,6 +14,7 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { emailValidation, inputValidation } from "@/util/util";
 import { signUp } from "@/api/auth/auth";
 import { useCustomMutation } from "@/hooks/useCustomMutation";
+import { INPUT_USING_TYPE } from "@/constant/keys.constant";
 
 export const SignUpForm = () => {
   // form data
@@ -46,6 +47,7 @@ export const SignUpForm = () => {
         setId({
           value: id.value,
           validation: true,
+          message: "이메일 형식이 올바르지 않습니다.",
         })
       );
       alert("이메일 형식이 올바르지 않습니다.");
@@ -59,6 +61,7 @@ export const SignUpForm = () => {
         setNickName({
           value: nickname.value,
           validation: true,
+          message: "닉네임을 입력해주세요.",
         })
       );
       alert("닉네임을 입력해주세요.");
@@ -70,6 +73,7 @@ export const SignUpForm = () => {
         setPassword({
           value: password.value,
           validation: true,
+          message: "비밀번호를 입력해주세요.",
         })
       );
       alert("비밀번호를 입력해주세요.");
@@ -82,6 +86,7 @@ export const SignUpForm = () => {
         setPasswordCheck({
           value: passwordCheck.value,
           validation: true,
+          message: "비밀번호를 입력해주세요.",
         })
       );
       alert("비밀번호를 입력해주세요.");
@@ -94,6 +99,7 @@ export const SignUpForm = () => {
         setPasswordCheck({
           value: passwordCheck.value,
           validation: true,
+          message: "비밀번호가 일치하지 않습니다.",
         })
       );
       alert("비밀번호가 일치하지 않습니다.");
@@ -127,6 +133,8 @@ export const SignUpForm = () => {
         forwardRef={inputRefs.nickname}
         forwardType={"nickname"}
         validation={nickname.validation}
+        usingType={INPUT_USING_TYPE}
+        message={nickname.message}
       />
       <Input
         inputType={"text"}
@@ -134,6 +142,8 @@ export const SignUpForm = () => {
         forwardRef={inputRefs.id}
         forwardType={"id"}
         validation={id.validation}
+        usingType={INPUT_USING_TYPE}
+        message={id.message}
       />
       <Input
         inputType={"password"}
@@ -141,6 +151,8 @@ export const SignUpForm = () => {
         forwardRef={inputRefs.password}
         forwardType={"password"}
         validation={password.validation}
+        usingType={INPUT_USING_TYPE}
+        message={password.message}
       />
       <Input
         inputType={"password"}
@@ -148,6 +160,8 @@ export const SignUpForm = () => {
         forwardRef={inputRefs.passwordCheck}
         forwardType={"passwordCheck"}
         validation={passwordCheck.validation}
+        usingType={INPUT_USING_TYPE}
+        message={passwordCheck.message}
       />
       <button
         type="submit"

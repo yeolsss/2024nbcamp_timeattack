@@ -4,7 +4,7 @@ export default function Home() {
   // redirect("/auth/?type=login");
   return (
     <LoginProvider>
-      <div>HOme!</div>
+      <div>Home!</div>
     </LoginProvider>
   );
 }

@@ -13,7 +13,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 const SignInForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-
   const selectSignData = useSelector(selectorSignForm);
   const inputRefs = {
     id: useRef<HTMLInputElement>(null),
@@ -55,13 +54,15 @@ const SignInForm = () => {
     };
     mutate(signInData);
   };
-
   return (
-    <form onSubmit={onSubmitSignIn}>
+    <form
+      onSubmit={onSubmitSignIn}
+      className="mt-[20px] border flex flex-col items-center w-[70%] gap-[20px]"
+    >
       <Input
         inputType={"text"}
         forwardPlaceHolder={"아이디를 입력해주세요."}
-        validation={true}
+        validation={selectSignData.id.validation}
         forwardRef={inputRefs.id}
         forwardType={"id"}
       />
@@ -69,11 +70,16 @@ const SignInForm = () => {
       <Input
         inputType={"password"}
         forwardPlaceHolder={"비밀번호를 입력해주세요."}
-        validation={true}
+        validation={selectSignData.password.validation}
         forwardRef={inputRefs.password}
         forwardType={"password"}
       />
-      <button type={"submit"}>로그인</button>
+      <button
+        type="submit"
+        className="max-w-[50%] w-full h-[50px] bg-[#393F7B] text-white rounded-[5px] "
+      >
+        로그인
+      </button>
     </form>
   );
 };

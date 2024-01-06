@@ -6,7 +6,7 @@ import {
   setPassword,
   setPasswordCheck,
 } from "@/lib/module/signFormSlice";
-import { emailValidation } from "@/util/util";
+import { emailValidation, inputValidation } from "@/util/util";
 
 type returnType = [string, (e: React.ChangeEvent<HTMLInputElement>) => void];
 const useCustomForm = (forwardType: string): returnType => {
@@ -21,6 +21,7 @@ const useCustomForm = (forwardType: string): returnType => {
     };
     switch (forwardType) {
       case "nickname":
+        inputState.validation = inputValidation(value);
         dispatch(setNickName(inputState));
         return;
       case "id":
@@ -28,9 +29,11 @@ const useCustomForm = (forwardType: string): returnType => {
         dispatch(setId(inputState));
         return;
       case "password":
+        inputState.validation = inputValidation(value);
         dispatch(setPassword(inputState));
         return;
       default:
+        inputState.validation = inputValidation(value);
         dispatch(setPasswordCheck(inputState));
         return;
     }

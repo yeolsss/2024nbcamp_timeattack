@@ -1,10 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authConfig from "./module/authConfigSlice";
 import signUpForm from "./module/signFormSlice";
 
 export const makeStore = () => {
   return configureStore({
-    reducer: { authConfig, signUpForm },
+    reducer: { signUpForm },
   });
 };
 export type AppStore = ReturnType<typeof makeStore>;

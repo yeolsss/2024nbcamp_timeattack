@@ -7,6 +7,8 @@ interface Props {
   validation?: boolean;
   forwardRef: RefObject<HTMLInputElement>;
   forwardType: string;
+  usingType?: string;
+  message?: string;
 }
 const Input = ({
   inputType,
@@ -14,20 +16,34 @@ const Input = ({
   validation,
   forwardRef,
   forwardType,
+  usingType = "",
+  message = "",
 }: Props) => {
   const [value, onChangeHandler] = useCustomForm(forwardType);
-  const validationInput = validation
-    ? "::after-content-['올바른 이메일을 입력해주세요.']"
-    : "";
   return (
-    <input
-      className={`p-5 border h-[60px] rounded-[10px] max-w-[50%] w-full p-[10px]::after-content-['올바른 이메일을 입력해주세요.']"`}
-      type={inputType}
-      placeholder={forwardPlaceHolder}
-      value={value}
-      onChange={onChangeHandler}
-      ref={forwardRef}
-    />
+    <div className="relative flex flex-col w-full items-center">
+      <input
+        className={`relative 
+           border h-[60px] rounded-[10px] max-w-[50%] w-full p-[10px] outline-none mb-[5px]
+        ${validation && `border-pink-700`}`}
+        type={inputType}
+        placeholder={forwardPlaceHolder}
+        value={value}
+        onChange={onChangeHandler}
+        ref={forwardRef}
+      />
+
+      {validation && (
+        //bottom-[-10px] left-[180px]
+        <span
+          className={`absolute bottom-[-10px] left-[${
+            usingType === "" ? "180px" : "250px"
+          }] text-pink-700 text-[12px] self-start`}
+        >
+          {message}
+        </span>
+      )}
+    </div>
   );
 };
 

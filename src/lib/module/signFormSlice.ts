@@ -4,24 +4,29 @@ import { RootState } from "@/lib/store";
 type signUpFormState = {
   value: string;
   validation: boolean;
+  message: string;
 };
 
 const initialState = {
   nickname: {
     value: "",
     validation: false,
+    message: "",
   },
   id: {
     value: "",
     validation: false,
+    message: "",
   },
   password: {
     value: "",
     validation: false,
+    message: "",
   },
   passwordCheck: {
     value: "",
     validation: false,
+    message: "",
   },
 };
 
@@ -41,7 +46,7 @@ const signFormSlice = createSlice({
     setPasswordCheck: (state, action: PayloadAction<signUpFormState>) => {
       state.passwordCheck = action.payload;
     },
-    resetSignUpForm: () => initialState,
+    resetSignUpForm: (state) => (state = initialState),
   },
 });
 
