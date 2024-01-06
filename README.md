@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 2024 nbccamp timeattack
+## 프로젝트 개요
 
-## Getting Started
+>이번 타임어택 과제는 현대 E-Commerce 플랫폼에서 필수적인 로그인 및 회원가입 기능의 구현에 중점을 두고 있습니다. Next.js와 Redux를 활용하여 이 두 핵심 기능을 구축하는 것이 주된 목표입니다. 이 과정을 통해, 개발자로서의 필수적인 기술 능력과 협업에 필요한 기초 역량을 키울 수 있는 기회를 제공합니다.
+>본 과제는 단순히 기능 구현을 넘어, 제한된 시간 내에 정확하고 효율적으로 작업을 수행할 수 있는 능력을 테스트합니다. '타임 어택'이라는 요소는 개발자로서의 시간 관리와 작업 속도, 그리고 정확성에 대한 자가 평가의 기회를 제공하며, 이는 실제 현업에서의 긴박한 상황에 대비하는 데 매우 중요한 요소입니다.
+>이 프로젝트를 통해, 제가 개발자로서 어디에 서 있는지, 어떤 부분이 잘되고 있는지, 그리고 앞으로 어떤 부분을 보완해야 하는지에 대한 명확한 이해를 얻을 수 있을 것으로 기대합니다. 또한, 이 과제를 수행함으로써 다른 개발자들과의 협업, 문제 해결, 그리고 효율적인 코드 관리 능력을 한층 더 발전시킬 수 있는 좋은 기회가 될 것입니다.
 
-First, run the development server:
+### 구현하며 중요하게 생각했던 점
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- 컴포넌트 최대한 재활용 하기
+  - input, tanstack Query 등 자주 사용되는 부분을 custom hook으로 만들어 재사용 및 유지보수가 편리하게 작성
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 최대한 중복되는 코드를 재사용 가능하게 만들기
+  - 위 내용과 같은 맥락이지만 이 부분은 함수를 주로 사용하여 중복되는 코드를 최대한 줄였습니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- nextjs 이지만 대부분의 로그인 코드는 client에서 처리된다.
+  - 로그인 기능은 대부분 유저의 입력을 받아 처리해야하기에 server side보다는 client side가 주가된다고 생각합니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- 로그인 후 데이터를 어떻게 관리할 것인가(localstorage)
+  - 로그인 후 데이터는 localstorage에 저장하여 관리합니다. 따로 전역관리는 하지 않습니다.
 
-## Learn More
+- 로그인 체크를 어떻게 할 것인가(loginProvider component 생성)
+  - 로그인 체크는 loginProvider라는 컴포넌트를 만들어서 처리합니다. 이 컴포넌트는 로그인이 되어있는지 체크하고 로그인이 되어있지 않다면 로그인 페이지로 이동시킵니다.
+  - 그리고 추 후 다른 회원 권한이 필요한 페이지가 추가되더라도 이 프로바이더로 감싼다면 쉽게 로그인 체크를 진행할 수 있습니다.
 
-To learn more about Next.js, take a look at the following resources:
+- 로그인 후 페이지 이동을 어떻게 할 것인가(로그인 후 이전 페이지로 이동)
+  - 로그인 후 이전 페이지로 이동하기 위해 로그인을 시도하는 페이지를 redirect 쿼리스트링에 넣어 login 페이지로 이동 시킵니다.
+  - 그로인해 로그인 후 또는 회원가입 후 로그인을 진행하여도 로그인 페이지를 호출한 페이지로 이동할 수 있습니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 어떤 데이터를 전역 상태 관리를 할 것인가?(form data)
+  - 로그인 정보는 localstorage에 저장하고 loginProvider에서 관리하기에 전역 상태 관리 대상은 form data만 관리하게되었습니다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- 회원가입 유효성 검사
+  - 회원 가입시 각 input에 대해 form에서 submit event가 발생하면 유효성 검사를 하고 유효하지 않는 값의 input에는 붉은색 border가 생기며 어떤 이유인지 하단에 span으로 알려준다.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- 잘못된 경로로 접근시 404 페이지로 이동
+  - 잘못된 경로로 접근시 home으로 redirect 합니다.
