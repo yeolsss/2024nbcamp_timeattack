@@ -5,6 +5,10 @@ import { userCheck } from "@/api/auth/auth";
 import { useCustomQuery } from "@/hooks/useCustomQuery";
 import { usePathname, useRouter } from "next/navigation";
 
+/**
+ * login 을 확인하는 provider
+ * 회원 권한이 필요한 페이지에 감싸는 용도로 생성
+ */
 const LoginProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const pathname = usePathname();
