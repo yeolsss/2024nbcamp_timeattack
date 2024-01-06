@@ -23,7 +23,7 @@ const Input = ({
   return (
     <div className="relative flex flex-col w-full items-center">
       <input
-        className={`relative 
+        className={` 
            border h-[60px] rounded-[10px] max-w-[50%] w-full p-[10px] outline-none mb-[5px]
         ${validation && `border-pink-700`}`}
         type={inputType}
@@ -34,11 +34,10 @@ const Input = ({
       />
 
       {validation && (
-        //bottom-[-10px] left-[180px]
         <span
-          className={`absolute bottom-[-10px] left-[${
-            usingType === "" ? "180px" : "250px"
-          }] text-pink-700 text-[12px] self-start`}
+          className={`absolute bottom-[-10px] ${
+            usingType === "" ? "left-[180px]" : "left-[250px]"
+          } text-pink-700 text-[12px]`}
         >
           {message}
         </span>
