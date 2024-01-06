@@ -4,16 +4,22 @@ import { useRef } from "react";
 import { signIn } from "@/api/auth/auth";
 import { useCustomMutation } from "@/hooks/useCustomMutation";
 import { useSelector } from "react-redux";
-import { selectorSignForm } from "@/lib/module/signFormSlice";
+import {
+  selectorSignForm,
+  setId,
+  setPassword,
+} from "@/lib/module/signFormSlice";
 import { emailValidation, inputValidation } from "@/util/util";
 import { PostType, signInResponseType } from "@/types/apiTypes";
 import { AUTH_KEYS } from "@/constant/keys.constant";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
 
 const SignInForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const selectSignData = useSelector(selectorSignForm);
+  const dispatch = useAppDispatch();
   const inputRefs = {
     id: useRef<HTMLInputElement>(null),
     password: useRef<HTMLInputElement>(null),
@@ -39,11 +45,25 @@ const SignInForm = () => {
       inputValidation(selectSignData.id.value)
     ) {
       inputRefs.id.current?.focus();
+      dispatch(
+        setId({
+          value: selectSignData.id.value,
+          validation: true,
+          message: "이메일 형식이 아닙니다.",
+        })
+      );
       alert("이메일 형식이 아닙니다.");
       return;
     }
     if (inputValidation(selectSignData.password.value)) {
       inputRefs.password.current?.focus();
+      dispatch(
+        setPassword({
+          value: selectSignData.password.value,
+          validation: true,
+          message: "비밀번호를 입력해주세요.",
+        })
+      );
       alert("비밀번호를 입력해주세요.");
       return;
     }
@@ -65,6 +85,7 @@ const SignInForm = () => {
         validation={selectSignData.id.validation}
         forwardRef={inputRefs.id}
         forwardType={"id"}
+        message={selectSignData.id.message}
       />
 
       <Input
@@ -73,6 +94,7 @@ const SignInForm = () => {
         validation={selectSignData.password.validation}
         forwardRef={inputRefs.password}
         forwardType={"password"}
+        message={selectSignData.password.message}
       />
       <button
         type="submit"

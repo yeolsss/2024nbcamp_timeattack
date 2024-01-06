@@ -18,6 +18,7 @@ const useCustomForm = (forwardType: string): returnType => {
     const inputState = {
       value,
       validation: false,
+      message: "",
     };
     switch (forwardType) {
       case "nickname":

@@ -1,5 +1,5 @@
 "use client";
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { AUTH_KEYS } from "@/constant/keys.constant";
 import { userCheck } from "@/api/auth/auth";
 import { useCustomQuery } from "@/hooks/useCustomQuery";
@@ -12,10 +12,7 @@ import { usePathname, useRouter } from "next/navigation";
 const LoginProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const pathname = usePathname();
-
-  const { accessToken } = JSON.parse(
-    localStorage.getItem(AUTH_KEYS.LOCAL_STORAGE_KEY) || "{}"
-  );
+  const [accessToken, setAccessToken] = useState<string>("");
 
   const loginQueryOptions = {
     queryKey: ["login"],
@@ -28,11 +25,16 @@ const LoginProvider = ({ children }: PropsWithChildren) => {
   const [user, error, isError] = useCustomQuery(loginQueryOptions);
   const redirectPath = `/auth/?type=login&redirect=${pathname}`;
   useEffect(() => {
+    const { accessToken } = JSON.parse(
+      localStorage.getItem(AUTH_KEYS.LOCAL_STORAGE_KEY) || "{}"
+    );
     if (!accessToken) {
       alert("로그인이 필요합니다.");
       router.push(redirectPath);
+      return;
     }
-  }, [accessToken, router]);
+    setAccessToken(accessToken);
+  }, [accessToken, router, redirectPath]);
 
   useEffect(() => {
     if (isError) {
@@ -40,7 +42,7 @@ const LoginProvider = ({ children }: PropsWithChildren) => {
 
       router.push(redirectPath);
     }
-  }, [isError, error]);
+  }, [isError, error, pathname, redirectPath, router]);
 
   return <>{children}</>;
 };

@@ -15,10 +15,13 @@ import { emailValidation, inputValidation } from "@/util/util";
 import { signUp } from "@/api/auth/auth";
 import { useCustomMutation } from "@/hooks/useCustomMutation";
 import { INPUT_USING_TYPE } from "@/constant/keys.constant";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const SignUpForm = () => {
-  // form data
   const selectSignUpForm = useSelector(selectorSignForm);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const { nickname, id, password, passwordCheck } = selectSignUpForm;
   const dispatch = useAppDispatch();
 
@@ -26,6 +29,7 @@ export const SignUpForm = () => {
     mutationFn: signUp,
     onSuccess: () => {
       alert("회원가입 성공");
+      router.push(`/auth/?type=login&redirect=${searchParams.get("redirect")}`);
     },
   };
   const mutate = useCustomMutation(signUpMutationOption);
