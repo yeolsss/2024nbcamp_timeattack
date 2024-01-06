@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useAppDispatch } from "@/hook/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
 import {
-  setEmail,
+  setId,
   setNickName,
   setPassword,
   setPasswordCheck,
@@ -23,9 +23,9 @@ const useCustomForm = (forwardType: string): returnType => {
       case "nickname":
         dispatch(setNickName(inputState));
         return;
-      case "email":
+      case "id":
         inputState.validation = !emailValidation(value);
-        dispatch(setEmail(inputState));
+        dispatch(setId(inputState));
         return;
       case "password":
         dispatch(setPassword(inputState));

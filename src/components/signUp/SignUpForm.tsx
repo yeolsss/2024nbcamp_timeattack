@@ -5,24 +5,34 @@ import { useSelector } from "react-redux";
 import {
   resetSignUpForm,
   selectorSignUpForm,
-  setEmail,
+  setId,
   setNickName,
   setPassword,
   setPasswordCheck,
 } from "@/lib/module/signUpFormSlice";
-import { useAppDispatch } from "@/hook/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { emailValidation, inputValidation } from "@/util/util";
+import { signUp } from "@/api/auth/auth";
+import { useCustomMutation } from "@/hooks/useCustomMutation";
 
 export const SignUpForm = () => {
   // form data
   const selectSignUpForm = useSelector(selectorSignUpForm);
-  const { nickname, email, password, passwordCheck } = selectSignUpForm;
+  const { nickname, id, password, passwordCheck } = selectSignUpForm;
   const dispatch = useAppDispatch();
+
+  const signUpMutationOption = {
+    mutationFn: signUp,
+    onSuccess: () => {
+      alert("회원가입 성공");
+    },
+  };
+  const mutate = useCustomMutation(signUpMutationOption);
 
   // validation에 사용할 ref
   const inputRefs = {
     nickname: useRef<HTMLInputElement>(null),
-    email: useRef<HTMLInputElement>(null),
+    id: useRef<HTMLInputElement>(null),
     password: useRef<HTMLInputElement>(null),
     passwordCheck: useRef<HTMLInputElement>(null),
   };
@@ -31,15 +41,15 @@ export const SignUpForm = () => {
     e.preventDefault();
 
     // 이메일 형식 check
-    if (!emailValidation(email.value) || inputValidation(email.value)) {
+    if (!emailValidation(id.value) || inputValidation(id.value)) {
       dispatch(
-        setEmail({
-          value: email.value,
+        setId({
+          value: id.value,
           validation: true,
         })
       );
       alert("이메일 형식이 올바르지 않습니다.");
-      inputRefs.email.current?.focus();
+      inputRefs.id.current?.focus();
       return;
     }
 
@@ -92,6 +102,12 @@ export const SignUpForm = () => {
     }
 
     // 회원가입 로직 start
+    const signUpData = {
+      nickname: nickname.value,
+      id: id.value,
+      password: password.value,
+    };
+    mutate(signUpData);
   };
 
   useEffect(() => {
@@ -115,9 +131,9 @@ export const SignUpForm = () => {
       <Input
         inputType={"text"}
         forwardPlaceHolder={"이메일을 입력해주세요."}
-        forwardRef={inputRefs.email}
-        forwardType={"email"}
-        validation={email.validation}
+        forwardRef={inputRefs.id}
+        forwardType={"id"}
+        validation={id.validation}
       />
       <Input
         inputType={"password"}

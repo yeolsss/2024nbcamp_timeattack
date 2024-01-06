@@ -11,7 +11,7 @@ const initialState = {
     value: "",
     validation: false,
   },
-  email: {
+  id: {
     value: "",
     validation: false,
   },
@@ -32,8 +32,8 @@ const signUpFormSlice = createSlice({
     setNickName: (state, action: PayloadAction<signUpFormState>) => {
       state.nickname = action.payload;
     },
-    setEmail: (state, action: PayloadAction<signUpFormState>) => {
-      state.email = action.payload;
+    setId: (state, action: PayloadAction<signUpFormState>) => {
+      state.id = action.payload;
     },
     setPassword: (state, action: PayloadAction<signUpFormState>) => {
       state.password = action.payload;
@@ -47,7 +47,7 @@ const signUpFormSlice = createSlice({
 
 export const {
   setNickName,
-  setEmail,
+  setId,
   setPassword,
   setPasswordCheck,
   resetSignUpForm,
