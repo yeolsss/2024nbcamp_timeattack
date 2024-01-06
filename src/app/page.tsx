@@ -1,5 +1,10 @@
-import { redirect } from "next/navigation";
+import LoginProvider from "@/app/LoginProvider";
 
 export default function Home() {
-  redirect("/auth");
+  // redirect("/auth/?type=login");
+  return (
+    <LoginProvider>
+      <div>HOme!</div>
+    </LoginProvider>
+  );
 }

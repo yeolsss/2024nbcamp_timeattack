@@ -1,10 +1,15 @@
 import SignUp from "@/components/signUp/SignUp";
+import { SignIn } from "@/components/signIn/SignIn";
 
-const AuthPage = () => {
+interface Props {
+  searchParams: { type?: string };
+}
+const AuthPage = ({ searchParams }: Props) => {
+  const { type } = searchParams;
   return (
     <>
-      {/*<SignIn />*/}
-      <SignUp />
+      {type === "login" && <SignIn />}
+      {type !== "login" && <SignUp />}
     </>
   );
 };

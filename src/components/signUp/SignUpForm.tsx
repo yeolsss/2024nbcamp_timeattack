@@ -4,12 +4,12 @@ import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import {
   resetSignUpForm,
-  selectorSignUpForm,
+  selectorSignForm,
   setId,
   setNickName,
   setPassword,
   setPasswordCheck,
-} from "@/lib/module/signUpFormSlice";
+} from "@/lib/module/signFormSlice";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { emailValidation, inputValidation } from "@/util/util";
 import { signUp } from "@/api/auth/auth";
@@ -17,7 +17,7 @@ import { useCustomMutation } from "@/hooks/useCustomMutation";
 
 export const SignUpForm = () => {
   // form data
-  const selectSignUpForm = useSelector(selectorSignUpForm);
+  const selectSignUpForm = useSelector(selectorSignForm);
   const { nickname, id, password, passwordCheck } = selectSignUpForm;
   const dispatch = useAppDispatch();
 

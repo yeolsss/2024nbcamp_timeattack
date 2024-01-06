@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authConfig from "./module/authConfigSlice";
-import signUpForm from "./module/signUpFormSlice";
+import signUpForm from "./module/signFormSlice";
 
 export const makeStore = () => {
   return configureStore({
