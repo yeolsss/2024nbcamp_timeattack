@@ -22,17 +22,18 @@ const LoginProvider = ({ children }: PropsWithChildren) => {
   };
 
   const [user, error, isError] = useCustomQuery(loginQueryOptions);
+  const redirectPath = `/auth/?type=login&redirect=${pathname}`;
   useEffect(() => {
     if (!accessToken) {
       alert("로그인이 필요합니다.");
-      router.push("/auth/?type=login");
+      router.push(redirectPath);
     }
   }, [accessToken, router]);
 
   useEffect(() => {
     if (isError) {
       alert("로그인이 필요합니다.");
-      const redirectPath = `/auth/?type=login&redirect=${pathname}`;
+
       router.push(redirectPath);
     }
   }, [isError, error]);
