@@ -5,7 +5,7 @@ import {
   setNickName,
   setPassword,
   setPasswordCheck,
-} from "@/lib/module/signUpFormSlice";
+} from "@/lib/module/signFormSlice";
 import { emailValidation } from "@/util/util";
 
 type returnType = [string, (e: React.ChangeEvent<HTMLInputElement>) => void];

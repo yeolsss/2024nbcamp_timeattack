@@ -3,6 +3,7 @@
 import { PropsWithChildren, useRef } from "react";
 import { Provider } from "react-redux";
 import { AppStore, makeStore } from "@/lib/store";
+import QueryProvider from "@/app/QueryProvider";
 
 export default function StoreProvider({ children }: PropsWithChildren) {
   const storeRef = useRef<AppStore>();
@@ -10,5 +11,9 @@ export default function StoreProvider({ children }: PropsWithChildren) {
     storeRef.current = makeStore();
   }
 
-  return <Provider store={storeRef.current}>{children}</Provider>;
+  return (
+    <Provider store={storeRef.current}>
+      <QueryProvider>{children}</QueryProvider>
+    </Provider>
+  );
 }

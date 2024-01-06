@@ -25,7 +25,7 @@ const initialState = {
   },
 };
 
-const signUpFormSlice = createSlice({
+const signFormSlice = createSlice({
   name: "signUpForm",
   initialState,
   reducers: {
@@ -51,6 +51,6 @@ export const {
   setPassword,
   setPasswordCheck,
   resetSignUpForm,
-} = signUpFormSlice.actions;
-export const selectorSignUpForm = (state: RootState) => state.signUpForm;
-export default signUpFormSlice.reducer;
+} = signFormSlice.actions;
+export const selectorSignForm = (state: RootState) => state.signUpForm;
+export default signFormSlice.reducer;
